@@ -61,6 +61,8 @@ let database;
     }
 })();
 
+app.get('/', (req, res) => { res.render('index'); });
+
 app.use('/', authRouter)
 
 app.use('/api/v1/tasks', taskRouter)
