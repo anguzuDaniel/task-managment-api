@@ -10,7 +10,7 @@
       },
       {
         "src": "/(.*)",
-        "destination": "/$1"
+        "destination": "/app.js"
       }
     ]
   }  
