@@ -4,10 +4,10 @@
   "description": "Task manager api",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "build": "echo 'No build needed'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js",
+    "build": "echo 'No build step'",
+    "dev": "netlify-lambda serve src",
+    "serve": "netlify-lambda build src"
   },
   "author": "Anguzu Daniel",
   "license": "ISC",

@@ -1,0 +1,9 @@
+[build]
+functions = "functions" # Directory for your lambda functions
+command = "npm run build" # Build command
+publish = "public" # Publish directory for static files
+
+[[redirects]]
+from = "/*"
+to = "/.netlify/functions/server"
+status = 200
