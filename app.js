@@ -53,6 +53,8 @@ let database;
         console.log("Database: " + database);
 
         console.log('Connect: Connected to MongoDB Atlas');
+
+        module.exports.handler = serverless(app)
     } catch (error) {
         console.error('Error connecting to MongoDB Atlas:', error);
     }
@@ -61,5 +63,3 @@ let database;
 app.use('/', authRouter)
 
 app.use('/api/v1/tasks', taskRouter)
-
-module.exports.handler = serverless(app)
