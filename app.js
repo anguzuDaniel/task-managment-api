@@ -10,6 +10,7 @@ const flash = require('connect-flash');
 const  { connectToDatabase } = require('./db');
 const { ensureAuthenticated } = require('./middleware/authMiddleware');
 const taskRouter = require('./routes/taskRouter')
+const serverless = require('serverless-http');
 
 const app = express();
 const SQLiteStore = require('connect-sqlite3')(session);
@@ -52,17 +53,13 @@ let database;
         console.log("Database: " + database);
 
         console.log('Connect: Connected to MongoDB Atlas');
-
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        })
     } catch (error) {
         console.error('Error connecting to MongoDB Atlas:', error);
     }
 })();
 
-app.get('/', (req, res) => { res.render('index'); });
-
 app.use('/', authRouter)
 
 app.use('/api/v1/tasks', taskRouter)
+
+module.exports.handler = serverless(app)

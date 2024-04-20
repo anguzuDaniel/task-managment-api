@@ -4,7 +4,7 @@
   "description": "Task manager api",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "node app.js",
     "build": "echo 'No build step'",
     "dev": "netlify-lambda serve src",
     "serve": "netlify-lambda build src"
@@ -27,6 +27,7 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0",
+    "serverless-http": "^3.2.0",
     "snappy": "^7.2.2"
   }
 }
