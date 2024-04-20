@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "build": "netlify deploy --prod",
-    "dev": "netlify-lambda serve build",
-    "serve": "netlify-lambda build"
+    "dev": "netlify-lambda serve",
+    "serve": "netlify-lambda build && netlify-lambda serve"
   },
   "author": "Anguzu Daniel",
   "license": "ISC",

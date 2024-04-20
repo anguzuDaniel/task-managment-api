@@ -1,7 +1,7 @@
 [build]
-    functions = ".functions/"
-    command = "npm run build" 
-    publish = "task-manager-api"
+  functions = "functions"
+  command = "npm run build" 
+  publish = "task-manager-api/"
 
 [[redirects]]
   from = "/*"
