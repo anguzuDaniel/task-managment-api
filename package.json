@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "build": "netlify deploy --prod",
-    "dev": "netlify-lambda serve",
+    "dev": "netlify-lambda serve app.js",
     "serve": "netlify-lambda build && netlify-lambda serve"
   },
   "author": "Anguzu Daniel",

@@ -8,7 +8,7 @@ const logger = require('morgan');
 const crypto = require('crypto');
 const flash = require('connect-flash');
 const  { connectToDatabase } = require('../db');
-const taskRouter = require('../routes/taskRouter')
+const taskRouter = require('../routes/taskRouter');
 const serverless = require('serverless-http');
 
 const app = express();
@@ -58,8 +58,8 @@ let database;
     }
 })();
 
-app.use('/', authRouter)
+app.use('/.netlify/functions/', authRouter)
 
-app.use('/api/v1/tasks', taskRouter)
+app.use('/.netlify/functions/api/v1/tasks', taskRouter)
 
 module.exports.handler = serverless(app)
