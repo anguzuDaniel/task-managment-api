@@ -1,14 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session')
-const authRouter = require('./routes/auth');
+const authRouter = require('../routes/auth');
 const path = require('path');
-const passport = require('./models/Passport');
+const passport = require('../models/Passport');
 const logger = require('morgan');
 const crypto = require('crypto');
 const flash = require('connect-flash');
-const  { connectToDatabase } = require('./db');
-const taskRouter = require('./routes/taskRouter')
+const  { connectToDatabase } = require('../db');
+const taskRouter = require('../routes/taskRouter')
 const serverless = require('serverless-http');
 
 const app = express();
@@ -28,7 +28,7 @@ app.use(session({
     secret: process.env.session || 'your secret key', 
     resave: false, 
     saveUninitialized: false,
-    store: new SQLiteStore({ db: './sessions.db', dir: './' }),
+    store: new SQLiteStore({ db: '../sessions.db', dir: '../' }),
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

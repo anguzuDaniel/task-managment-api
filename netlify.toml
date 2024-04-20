@@ -1,9 +1,9 @@
 [build]
-    functions = "functions"
+    functions = ".functions/"
     command = "npm run build" 
     publish = "task-manager-api"
 
 [[redirects]]
-  from = "/api/*"
-  to = "https://tasky-manager-api.netlify.app/"
+  from = "/*"
+  to = "https://tasky-manager-api.netlify.app/:splat"
   status = 200
