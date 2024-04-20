@@ -1,9 +1,9 @@
 [build]
-functions = "functions" # Directory for your lambda functions
-command = "npm run build" # Build command
-publish = "public" # Publish directory for static files
+    functions = "functions" # Directory for your lambda functions
+    command = "npm run build" # Build command
+    publish = "public" # Publish directory for static files
 
 [[redirects]]
-  from = "/api/"
+  from = "/api/*"
   to = "https://tasky-manager-api.netlify.app/"
   status = 200

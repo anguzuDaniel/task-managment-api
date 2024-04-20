@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "build": "echo 'No build step'",
+    "build": "netlify deploy --prod",
     "dev": "netlify-lambda serve src",
     "serve": "netlify-lambda build src"
   },
@@ -23,6 +23,8 @@
     "express-session": "^1.18.0",
     "mongoose": "^8.3.1",
     "mongoose-paginate-v2": "^1.8.0",
+    "netlify-cli": "^17.22.1",
+    "netlify-lambda": "^2.0.16",
     "nodemon": "^3.1.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
