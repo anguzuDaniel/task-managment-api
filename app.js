@@ -8,7 +8,6 @@ const logger = require('morgan');
 const crypto = require('crypto');
 const flash = require('connect-flash');
 const  { connectToDatabase } = require('./db');
-const { ensureAuthenticated } = require('./middleware/authMiddleware');
 const taskRouter = require('./routes/taskRouter')
 const serverless = require('serverless-http');
 
@@ -32,8 +31,8 @@ app.use(session({
     store: new SQLiteStore({ db: './sessions.db', dir: './' }),
     cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // Enable secure cookies in production environment
-        maxAge: 1000 * 60 * 60 * 24 // Example: 24-hour expiration
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 1000 * 60 * 60 * 24
     }
 }))
 

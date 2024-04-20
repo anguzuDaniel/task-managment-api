@@ -4,6 +4,6 @@ command = "npm run build" # Build command
 publish = "public" # Publish directory for static files
 
 [[redirects]]
-  from = "/*"
-  to = "https://tasky-manager-api.netlify.app/:splat"
+  from = "/api/"
+  to = "https://tasky-manager-api.netlify.app/"
   status = 200
