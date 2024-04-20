@@ -1,7 +1,7 @@
 [build]
-    functions = "functions" # Directory for your lambda functions
-    command = "npm run build" # Build command
-    publish = "public" # Publish directory for static files
+    functions = "functions"
+    command = "npm run build" 
+    publish = "task-manager-api"
 
 [[redirects]]
   from = "/api/*"
