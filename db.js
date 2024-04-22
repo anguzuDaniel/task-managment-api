@@ -1,22 +1,15 @@
 const { MongoClient } = require('mongodb');
 
-const username = encodeURIComponent(process.env.DB_USER_NAME)
-const password = encodeURIComponent(process.env.DB_PASSWORD)
-const clusterUrl = process.env.DB_CLUSTER
-const authMechanism = 'DEFAULT';
-
-const dbUri = `mongodb+srv://${username}:${password}@${clusterUrl}`;
-
-console.log(`Connection String: ${dbUri}`);
+console.log(`Connection String: ${process.env.MONGODB_URI}`);
 
 async function connectToDatabase() {
   // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-  const client = new MongoClient(dbUri);
+  const client = new MongoClient(process.env.MONGODB_URI);
 
   try {
     await client.connect();
     console.log('Connect to MongoDB Atlas');
-    const database = client.db('task-manager');
+    const database = client.db(process.env.DB_CLUSTER);
     return database
   } catch (error) {
     console.error("Error connecting to MongoDB Atlas:", error);

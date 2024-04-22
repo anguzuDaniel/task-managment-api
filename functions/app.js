@@ -10,6 +10,7 @@ const flash = require('connect-flash');
 const  { connectToDatabase } = require('../db');
 const taskRouter = require('../routes/taskRouter');
 const serverless = require('serverless-http');
+const cors = require('cors');
 
 const app = express();
 const SQLiteStore = require('connect-sqlite3')(session);
@@ -41,6 +42,7 @@ app.use(flash())
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
+app.use(cors());
 
 // Connect to the database once
 let database;
@@ -61,5 +63,9 @@ let database;
 app.use('/.netlify/functions/', authRouter)
 
 app.use('/.netlify/functions/api/v1/tasks', taskRouter)
+
+app.use(cors({
+  origin: 'http://localhost:8888'
+}));
 
 module.exports.handler = serverless(app)
