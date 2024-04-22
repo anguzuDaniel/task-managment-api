@@ -1,3 +1,41 @@
-<form action="/logout" method="post">
-    <button type="submit">logout</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies List</title>
+</head>
+<body>
+    <h1>MongoDB with Netlify Functions</h1>
+    <ul id="movies"></ul>
+
+    <form action="/logout" method="post">
+        <button type="submit">logout</button>
+    </form>
+
+    <script>
+        (async () => {
+            try {
+                // Fetch data from the Netlify Function endpoint
+                const response = await fetch("/.netlify/functions/get_movies");
+                const results = await response.json();
+
+                // Check if the response is empty
+                if (results.length === 0) {
+                    document.getElementById("movies").innerHTML = "<li>No movies found</li>";
+                } else {
+                    // Append each movie to the list
+                    results.forEach(result => {
+                        const listItem = document.createElement("li");
+                        listItem.innerText = result.title;
+                        document.getElementById("movies").appendChild(listItem);
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to fetch movies:", error);
+                document.getElementById("movies").innerHTML = "<li>Error loading movies.</li>";
+            }
+        })();
+    </script>
+</body>
+</html>

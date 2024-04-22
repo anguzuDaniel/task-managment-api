@@ -21,10 +21,17 @@ const getTasks = async (req, res) => {
         // Fetch paginated and filtered tasks from the database
         const tasks = await Task.paginate(query, options);
 
-        res.json(tasks);
+        
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify(tasks)
+        }
     } catch (error) {
-        console.error('Failed to fetch tasks:', error);
-        res.status(500).json({ message: 'Failed to fetch tasks' });
+        return { 
+            statusCode: 500, 
+            body: JSON.stringify({ message: error.message || 'Internal Server Error' })
+        }
     }
 };
 
@@ -37,13 +44,14 @@ const getTaskById = async (req, res) => {
         const task = await Task.findById(id)
         
         if (!task) {
-            console.log("Task not found");
-            return res.status(404).json({ message: 'Task not found' });
+            return {
+                statusCode: 404,
+                body: JSON.stringify('Task not found')
+            }
         }
         res.json(task);
     } catch (error) {
-        console.error('Error finding task:', error);
-        res.status(500).json({ message: 'Failed to find task' });
+        return { statusCode: 500, body: error.toString() }
     }
 };
 
@@ -58,10 +66,12 @@ const createTask = async (req, res) => {
         const newTask = new Task({ title, description, tags, dueDate, reminders, notifications });
         await newTask.save();
 
-        res.status(201).json(newTask);
+        return {
+            statusCode: 201,
+            body: JSON.stringify(newTask)
+        }
     } catch (error) { 
-        console.error('Failed to create task:', error);
-        res.status(500).json({ message: 'Failed to create task.' })
+        return { statusCode: 500, body: error.toString() }
     }
 }
 
@@ -74,13 +84,21 @@ const deleteTask = async (req, res) => {
         const task = await Task.findByIdAndDelete(id)
         
         if (!task) {
-            console.log("Task not found");
-            return res.status(404).json({ message: 'Task not found' });
+            return {
+                statusCode: 404,
+                body: JSON.stringify('Task not found')
+            }
         }
-        res.json({ message: 'Task deleted successfully' });
+
+        return {
+            statusCode: 404,
+            body: JSON.stringify('Task deleted successfully')
+        }
     } catch (error) {
-        console.error('Error deleting task:', error);
-        res.status(500).json({ message: 'Failed to delete task' });
+        return {
+            statusCode: 500,
+            body: JSON.stringify('Failed to delete task')
+        }
     }
 }
 
@@ -95,7 +113,11 @@ const updateTask = async (req, res) => {
 
         // Ensure that the request body contains data to update
         if (!updatedTaskData) {
-            return res.status(400).json({ message: 'No data provided for updating task' });
+
+            return {
+                statusCode: 400,
+                body: JSON.stringify('No data provided for updating task')
+            }
         }
 
         // Update the task using findByIdAndUpdate
@@ -103,15 +125,19 @@ const updateTask = async (req, res) => {
         
         // Check if the task was found and updated successfully
         if (!updatedTask) {
-            console.log("Task not found");
-            return res.status(404).json({ message: 'Task not found' });
+            return {
+                statusCode: 404,
+                body: JSON.stringify('Task not found')
+            }
         }
 
         // Respond with the updated task
         res.json({ message: 'Task updated successfully', task: updatedTask });
     } catch (error) {
-        console.error('Error updating task:', error);
-        res.status(500).json({ message: 'Failed to updating task' });
+        return {
+            statusCode: 500,
+            body: JSON.stringify('Failed to updating task')
+        }
     }
 }
 
@@ -128,10 +154,15 @@ const addCommentToTask = async (req, res) => {
         task.comments.push({ content, author: authorId });
         await task.save();
 
-        return res.status(200).json({ message: 'Comment added successfully' });
+        return {
+            statusCode: 200,
+            body: JSON.stringify('Comment added successfully')
+        }
     } catch (error) {
-        console.error('Error adding comment to task:', error);
-        return res.status(500).json({ message: 'Failed to add comment to task' });
+        return {
+            statusCode: 500,
+            body: JSON.stringify('Failed to add comment to task')
+        }
     }
 };
 
@@ -143,7 +174,10 @@ const uploadAttachmentToTask = async (req, res) => {
         const task = await Task.findById(taskId);
 
         if (!task) {
-            return res.status(404).json({ message: 'Task not found' });
+            return {
+                statusCode: 404,
+                body: JSON.stringify('Task not found')
+            }
         }
 
         // Here, you would handle uploading the attachment and storing its path
@@ -151,10 +185,15 @@ const uploadAttachmentToTask = async (req, res) => {
         task.attachments.push(attachment);
         await task.save();
 
-        return res.status(200).json({ message: 'Attachment uploaded successfully' });
+        return {
+            statusCode: 200,
+            body: JSON.stringify('Attachment uploaded successfully')
+        }
     } catch (error) {
-        console.error('Error uploading attachment to task:', error);
-        return res.status(500).json({ message: 'Failed to upload attachment to task' });
+        return {
+            statusCode: 500,
+            body: JSON.stringify('Failed to upload attachment to task')
+        }
     }
 };
 
@@ -187,11 +226,12 @@ const searchTasks = async (req, res) => {
         // Execute query to find matching tasks
         const tasks = await Task.find(query);
 
-        // Return matched tasks as response
-        res.json(tasks);
+        return {
+            statusCode: 200,
+            body: JSON.stringify(tasks)
+        }
     } catch (error) {
-        console.error('Error searching tasks:', error);
-        res.status(500).json({ message: 'Failed to search tasks' });
+        return { statusCode: 500, body: error.toString() }
     }
 };
 
@@ -201,9 +241,12 @@ const getCompletionRates = async (req, res) => {
             { $group: { _id: "$completed", count: { $sum: 1 } } }
         ]);
         res.json(stats);
+        return {
+            statusCode: 200,
+            body: JSON.stringify(stats)
+        }
     } catch (error) {
-        console.error('Error fetching completion rates:', error);
-        res.status(500).json({ message: 'Failed to fetch completion rates' });
+        return { statusCode: 500, body: error.toString() }
     }
 };
 
@@ -214,10 +257,13 @@ const getAverageTaskDuration = async (req, res) => {
             { $project: { duration: { $subtract: ["$completedAt", "$createdAt"] } } },
             { $group: { _id: null, averageDuration: { $avg: "$duration" } } }
         ]);
-        res.json({ averageDuration: stats[0].averageDuration });
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ averageDuration: stats[0].averageDuration })
+        }
     } catch (error) {
-        console.error('Error calculating average task duration:', error);
-        res.status(500).json({ message: 'Failed to calculate average task duration' });
+        return { statusCode: 500, body: error.toString() }
     }
 };
 
@@ -228,10 +274,12 @@ const getTaskDistribution = async (req, res) => {
             { $group: { _id: "$tags", count: { $sum: 1 } } },
             { $sort: { count: -1 } }
         ]);
-        res.json(stats);
+        return {
+            statusCode: 200,
+            body: JSON.stringify(stats)
+        }
     } catch (error) {
-        console.error('Error fetching task distribution:', error);
-        res.status(500).json({ message: 'Failed to fetch task distribution' });
+        return { statusCode: 500, body: error.toString() }
     }
 };
 

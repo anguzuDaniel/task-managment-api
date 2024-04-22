@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h1>Tasks</h1>
+        <ul id="tasks"></ul>
+        <script>
+            (async () => {
+                let results = await fetch("https://tasky-manager-api.netlify.app/api/v1/tasks").then(response => response.json());
+                results.forEach(result => {
+                    const listItem = document.createElement("li");
+                    listItem.innerText = result.title;
+                    document.getElementById("tasks").appendChild(listItem);
+                });
+            })();
+        </script>
+    </body>
+</html>
