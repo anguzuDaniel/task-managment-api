@@ -25,17 +25,20 @@ app.use(express.json());
 app.use(logger('dev'))
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ 
-    secret: process.env.session || 'your secret key', 
-    resave: false, 
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'your_secret_key',
+    resave: false,
     saveUninitialized: false,
-    store: new SQLiteStore({ db: '../sessions.db', dir: '../' }),
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+        dbName: 'task-manager',
+        collectionName: 'sessions',
+        ttl: 24 * 60 * 60
+    }),
     cookie: {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 1000 * 60 * 60 * 24
+        maxAge: 24 * 60 * 60 * 1000
     }
-}))
+}));
 
 app.use(flash())
 
@@ -60,12 +63,10 @@ let database;
     }
 })();
 
-app.use('/.netlify/functions/', authRouter)
+app.use('/', authRouter)
 
-app.use('/.netlify/functions/api/v1/tasks', taskRouter)
+app.use('/api/v1/tasks', taskRouter)
 
-app.use(cors({
-  origin: 'http://localhost:8888'
-}));
+app.use(cors({origin: 'http://localhost:8888'}));
 
 module.exports.handler = serverless(app)
