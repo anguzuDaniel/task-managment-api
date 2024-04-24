@@ -9,7 +9,7 @@ async function connectToDatabase() {
   try {
     await client.connect();
     console.log('Connect to MongoDB Atlas');
-    const database = client.db(process.env.DB_CLUSTER);
+    const database = client.db(process.env.MONGODB_DATABASE);
     return database
   } catch (error) {
     console.error("Error connecting to MongoDB Atlas:", error);

@@ -12,15 +12,11 @@ const taskRouter = require('../routes/taskRouter');
 const serverless = require('serverless-http');
 const cors = require('cors');
 
-const mongoose = require('mongoose')
 const MongoStore = require('connect-mongo');
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname + '/views'));

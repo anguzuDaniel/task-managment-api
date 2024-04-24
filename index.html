@@ -6,7 +6,7 @@
         <ul id="tasks"></ul>
         <script>
             (async () => {
-                let results = await fetch("/.netlify/functions/app").then(response => response.json());
+                let results = await fetch("https://tasky-manager-api.netlify.app/get_tasks/get_tasks").then(response => response.json());
                 results.forEach(result => {
                     const listItem = document.createElement("li");
                     listItem.innerText = result.title;
