@@ -13,7 +13,6 @@ const serverless = require('serverless-http');
 const cors = require('cors');
 
 const app = express();
-const SQLiteStore = require('connect-sqlite3')(session);
 
 const PORT = process.env.PORT || 3000;
 
