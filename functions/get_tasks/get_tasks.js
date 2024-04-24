@@ -1,4 +1,5 @@
-// Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
+const { Task } = require('../models/Task');
+
 const handler = async (event) => {
   try {
     const { page = 1, limit = 10, title, completed, dueDate, tags, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
