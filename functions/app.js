@@ -12,8 +12,8 @@ const taskRouter = require('../routes/taskRouter');
 const serverless = require('serverless-http');
 const cors = require('cors');
 
-const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose')
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 
