@@ -1,8 +1,10 @@
+const  { connectToDatabase } = require('../../db');
 const { Task } = require('../../models/Task');
 
-const handler = async (event) => {
+const handler = async (event, context) => {
   try {
-    const { page = 1, limit = 10, title, completed, dueDate, tags, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
+    const { queryStringParameters } = event;
+    const { page = 1, limit = 10, title, completed, dueDate, tags, sortBy = 'createdAt', sortOrder = 'desc' } = queryStringParameters;
     let query = {};
 
     // Apply filters
@@ -23,11 +25,13 @@ const handler = async (event) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify(tasks),
-
+      body: JSON.stringify(tasks)
     }
   } catch (error) {
-    return { statusCode: 500, body: error.toString() }
+    return { 
+      statusCode: 500, 
+      body: error.toString() 
+    }
   }
 }
 
