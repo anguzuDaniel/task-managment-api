@@ -12,6 +12,8 @@ const taskRouter = require('../routes/taskRouter');
 const serverless = require('serverless-http');
 const cors = require('cors');
 
+const MongoStore = require('connect-mongo')(session);
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -28,7 +30,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'your_secret_key',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
+    store: new MongoStore.create({
         mongoUrl: process.env.MONGODB_URI,
         dbName: 'task-manager',
         collectionName: 'sessions',
