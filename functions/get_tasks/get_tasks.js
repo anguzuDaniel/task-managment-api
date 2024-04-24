@@ -1,7 +1,7 @@
 const  { connectToDatabase } = require('../../db');
 const { Task } = require('../../models/Task');
 
-const handler = async (event, context) => {
+export async function handler(event, context) {
   try {
     const { queryStringParameters } = event;
     const { page = 1, limit = 10, title, completed, dueDate, tags, sortBy = 'createdAt', sortOrder = 'desc' } = queryStringParameters;
@@ -34,5 +34,3 @@ const handler = async (event, context) => {
     }
   }
 }
-
-module.exports = { handler }
