@@ -13,10 +13,14 @@ const serverless = require('serverless-http');
 const cors = require('cors');
 
 const MongoStore = require('connect-mongo')(session);
+const mongoose = require('mongoose')
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname + '/views'));
@@ -30,15 +34,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'your_secret_key',
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI,
-        dbName: 'task-manager',
-        collectionName: 'sessions',
-        ttl: 24 * 60 * 60
-    }),
-    cookie: {
-        maxAge: 24 * 60 * 60 * 1000
-    }
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 app.use(flash())
