@@ -13,7 +13,7 @@ const serverless = require('serverless-http');
 const cors = require('cors');
 
 const mongoose = require('mongoose')
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 
 const app = express();
 
@@ -34,7 +34,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'your_secret_key',
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    store: MongoStore.ceate({ mongoUrl: process.env.MONGODB_URI })
 }));
 
 app.use(flash())
