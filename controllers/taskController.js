@@ -21,8 +21,6 @@ const getTasks = async (req, res) => {
         // Fetch paginated and filtered tasks from the database
         const tasks = await Task.paginate(query, options);
 
-        
-
         return {
             statusCode: 200,
             body: JSON.stringify(tasks)

@@ -4,15 +4,15 @@
     <body>
         <h1>Tasks</h1>
         <ul id="tasks"></ul>
-        <script>
+        <script>        
             (async () => {
-                let results = await fetch("/.netlify/functions/get_tasks").then(response => response.json());
-                results.forEach(result => {
+                const response = await fetch("/.netlify/functions/get_tasks").then(response => response.json());
+                const tasks = await response.json();
+                tasks.forEach(task => {
                     const listItem = document.createElement("li");
-                    listItem.innerText = result.title;
+                    listItem.textContent = `Title: ${task.title}, Description: ${task.description}, Tags: ${task.tags.join(', ')}, Due Date: ${task.dueDate}`;
                     document.getElementById("tasks").appendChild(listItem);
                 });
-                console.log(results);
             })();
         </script>
     </body>
