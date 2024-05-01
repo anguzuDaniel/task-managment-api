@@ -42,4 +42,4 @@ const handler = async (event) => {
     }
 }
 
-module.exports = { handler }
+module.exports = { handler };
