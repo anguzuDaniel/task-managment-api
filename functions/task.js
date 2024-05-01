@@ -9,10 +9,15 @@ const handler = async (event) => {
         const { queryStringParameters } = event;
         const { id } = queryStringParameters;
 
+        if (!ObjectId.isValid(id)) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify('Invalid ID format')
+            };
+        }
+
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
         const collection = database.collection(process.env.MONGODB_COLLECTION);
-
-        if (!id) return res.status(400).json({ message: 'ID parameter is missing' });
 
         if (!id) {
             return {
@@ -22,7 +27,7 @@ const handler = async (event) => {
         }
 
         // Retrieve the task by ID
-        const task = await collection.findById({ _id: ObjectId(id) });
+        const task = await collection.findOne({ _id: ObjectId.createFromHexString(id) });
 
         console.log(task);
 
