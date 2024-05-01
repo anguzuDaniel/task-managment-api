@@ -1,6 +1,6 @@
 [build]
   functions = "functions"
-  command = "npm run build" 
+  command = "echo 'Build complete'" 
   publish = "/"
 
 [[redirects]]
