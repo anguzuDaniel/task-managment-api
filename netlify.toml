@@ -12,3 +12,29 @@
   for = "/*"
   [headers.values]
   Access-Control-Allow-Origin = "*"
+
+# The following redirect is intended for use with most SPAs
+# that handle routing internally.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+  # Directory with serverless functions, including background
+  # functions, to deploy. This is an absolute path relative to the 
+  # base directory, which is the root by default (/).
+  directory = "/functions"
+
+# Use [dev] to set configuration overrides for local
+# development environments run using Netlify Dev - except
+# for environment variables. Environment variables for Netlify
+# Dev should be set under [context.dev.environment] instead.
+[dev]
+  port = 8888
+  publish = "dist"
+
+[template.environment]
+  MONGODB_URI = "mongodb+srv://anguzud7:hArQzJSKpGR9LaWU@cluster0.mxiikc0.mongodb.net/?retryWrites=true&w=majority"
+  MONGODB_DATABASE = "task-manager"
+  MONGODB_COLLECTION = "tasks"
