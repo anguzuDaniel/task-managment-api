@@ -30,14 +30,7 @@
 
                 // Update HTML content with task details
                 if (task) {
-                    taskDetailsContainer.innerHTML = `
-                        <p><strong>Title:</strong> ${task.title || 'N/A'}</p>
-                        <p><strong>Description:</strong> ${task.description || 'N/A'}</p>
-                        <p><strong>Tags:</strong> ${task.tags && task.tags.length ? task.tags.join(', ') : 'N/A'}</p>
-                        <p><strong>Due Date:</strong> ${task.dueDate || 'N/A'}</p>
-                        <p><strong>Reminders:</strong> ${task.reminders && task.reminders.length ? task.reminders.join(', ') : 'N/A'}</p>
-                        <p><strong>Notifications:</strong> ${task.notifications && task.notifications.length ? task.notifications.join(', ') : 'N/A'}</p>
-                    `;
+                    document.getElementById("task-details").textContent = JSON.stringify(task, null, '\n');
                 } else {
                     taskDetailsContainer.innerHTML = 'No task found for the given ID';
                 }

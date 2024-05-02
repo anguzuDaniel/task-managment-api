@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb');
 const { Task } = require('../models/Task');
+require('dotenv').config();
 
 const mongoClient = new MongoClient(process.env.MONGODB_URI);
 
